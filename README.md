@@ -14,6 +14,12 @@ A new Flutter application demo by [Daniel Ortiz @daniorca ](https://github.com/d
   + main.dart
   + models/modieModel.dart
 
+- **Tutorial 3**: CarouselSlider, FlexibleSpaceBar, NestedScrollView, CircularProgressIndicator
+
+  Files:
+  + main.dart
+
+
 ----
 
 For help getting started with Flutter, view our online
