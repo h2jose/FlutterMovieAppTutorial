@@ -55,6 +55,7 @@ class Results {
   bool adult;
   String overview;
   String releaseDate;
+  int heroTag;
 
   Results(
       {this.voteCount,

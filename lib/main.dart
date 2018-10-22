@@ -4,10 +4,12 @@ import 'dart:convert';
 import './models/movieModel.dart';
 import './models/tmdb.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:intl/intl.dart';
+import 'movieDetails.dart';
 
 const baseUrl = "https://api.themoviedb.org/3/movie/";
 const baseImageUrl = "https://image.tmdb.org/t/p/";
-const apiKey = "03400e684b0d8c24d655190914d4aab8";
+const apiKey = Tmdb.apiKey;
 
 const nowPlayingUrl = "${baseUrl}now_playing?api_key=$apiKey";
 const upcomingUrl = "${baseUrl}upcoming?api_key=$apiKey";
@@ -32,6 +34,7 @@ class _MyMovieApp extends State<MyMovieApp> {
   Movie popularMovies;
   Movie topRatedMovies;
   int heroTag = 0;
+  int _currentIdex = 0;
 
   @override
   void initState() {
@@ -87,10 +90,15 @@ class _MyMovieApp extends State<MyMovieApp> {
 
   Widget _buildMovieItem(Results movieItem) {
     heroTag += 1;
+    movieItem.heroTag = heroTag;
     return Material(
         elevation: 15.0,
         child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => MovieDetail(movie: movieItem,)
+              ));
+            },
             child: Hero(
               tag: heroTag,
               child: Image.network("${baseImageUrl}w342${movieItem.posterPath}",
@@ -116,7 +124,9 @@ class _MyMovieApp extends State<MyMovieApp> {
                     )),
                 Padding(
                   padding: EdgeInsets.only(left: 6.0, top: 2.0),
-                  child: Text(movieItem.releaseDate,
+                  child: Text(
+                      DateFormat('yyyy')
+                          .format(DateTime.parse(movieItem.releaseDate)),
                       style: TextStyle(fontSize: 8.0)),
                 ),
               ],
@@ -147,10 +157,12 @@ class _MyMovieApp extends State<MyMovieApp> {
                 scrollDirection: Axis.horizontal,
                 children: movie == null
                     ? <Widget>[Center(child: CircularProgressIndicator())]
-                    : movie.results.map((movieItem) => Padding(
-                          padding: EdgeInsets.only(left: 6.0, right: 2.0),
-                          child: _buildMovieListItem(movieItem),
-                        )).toList(),
+                    : movie.results
+                        .map((movieItem) => Padding(
+                              padding: EdgeInsets.only(left: 6.0, right: 2.0),
+                              child: _buildMovieListItem(movieItem),
+                            ))
+                        .toList(),
               ),
             ),
           ],
@@ -221,6 +233,20 @@ class _MyMovieApp extends State<MyMovieApp> {
           _buildMoviesListView(topRatedMovies, 'TOP RATES'),
         ]),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          fixedColor: Colors.lightBlue,
+          currentIndex: _currentIdex,
+          onTap: (int index) {
+            setState(() => _currentIdex = index);
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_movies), title: Text('All movies')),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.tag_faces), title: Text('Tickets')),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person), title: Text('Account')),
+          ]),
     );
   }
 }

@@ -1,31 +1,39 @@
 # Movie App Tutorial
 
-A new Flutter application demo by [Daniel Ortiz @daniorca ](https://github.com/daniorca/movieapp_flutter).
+Una aplicación Tutorial con Flutter, gracias a [Daniel Ortiz @daniorca ](https://github.com/daniorca/movieapp_flutter).
 
 ## Getting Started
 
-### STEPS (see Branchs):
-- **Tutorial 1**: Introduction and installation (Not here, read docs).
+### Módulos (Ver Branchs):
+- **Tutorial 1**: Introducción e instalación (Leer documentación oficial de flutter).
 
+- **Tutorial 2**: Configuración de API Json
 
-- **Tutorial 2**: API Json Configuration
-
-  Files:
+  Archivos:
   + main.dart
   + models/modieModel.dart
 
-- **Tutorial 3**: CarouselSlider, FlexibleSpaceBar, NestedScrollView, CircularProgressIndicator
+- **Tutorial 3**: Http, CarouselSlider, FlexibleSpaceBar, NestedScrollView, CircularProgressIndicator
 
-  Files:
+  Archivos:
   + main.dart
 
-- **Tutorial 4**: ListView, ListItem, Item
+- **Tutorial 4**: ListView, ListItem, Item, Child, Children, Container, Column, Padding
 
-  Files:
+  Archivos:
   + main.dart
+
+- **Tutorial 5**: Navigation, RaisedButton, FilterChip, Divider, SizedBox
+
+Archivos:
+  + main.dart
+  + movieDetails.dart
+  + models/movieDetailModel.dart
+  + models/tmdb.dart
+
 
 ----
 
-For help getting started with Flutter, view our online
+For help getting started with Flutter, view:
 - [EN documentation](https://flutter.io/).
 - [ES documentation](https://flutter-es.io/).
