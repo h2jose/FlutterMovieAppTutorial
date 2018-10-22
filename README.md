@@ -18,7 +18,7 @@ Una aplicación Tutorial con Flutter, gracias a [Daniel Ortiz @daniorca ](https:
   Archivos:
   + main.dart
 
-- **Tutorial 4**: ListView, ListItem, Item, Child, Children, Container, Column, Padding
+- **Tutorial 4**: ListView, ListItem, Item, Child, Children, Container, Column, Padding, Intl
 
   Archivos:
   + main.dart
@@ -31,9 +31,26 @@ Archivos:
   + models/movieDetailModel.dart
   + models/tmdb.dart
 
+- **Tutorial 6**: (Refactorizacion, parametrizacion de funciones)
+
+Archivos:
+  + main.dart
+  + movieDetails.dart
+  + models/movieDetailModel.dart
+  + models/movieCreditsModel.dart
+  + models/movieModel
+  + models/tmdb.dart
+  + models/cast_crew.dart
 
 ----
 
-For help getting started with Flutter, view:
+Este tutorial en youtube, por [Daniel Ortiz @daniorca ](https://github.com/daniorca):
+- [Flutter MovieApp](https://www.youtube.com/watch?v=2rz9rLvYJnk&list=PLjwNJFX1E9FZ3SBRhSGnnaqPFhkYcuhSw)
+
+Para trabajar con el Api de peliculas:
+- [THEMOVIEDB.ORG](https://developers.themoviedb.org)
+
+
+Para comenzar con Flutter, ver:
 - [EN documentation](https://flutter.io/).
 - [ES documentation](https://flutter-es.io/).

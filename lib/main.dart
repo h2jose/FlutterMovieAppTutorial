@@ -7,15 +7,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'movieDetails.dart';
 
-const baseUrl = "https://api.themoviedb.org/3/movie/";
-const baseImageUrl = "https://image.tmdb.org/t/p/";
-const apiKey = Tmdb.apiKey;
-
-const nowPlayingUrl = "${baseUrl}now_playing?api_key=$apiKey";
-const upcomingUrl = "${baseUrl}upcoming?api_key=$apiKey";
-const popularUrl = "${baseUrl}popular?api_key=$apiKey";
-const topRatedUrl = "${baseUrl}top_rated?api_key=$apiKey";
-
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Movie App',
@@ -46,7 +37,7 @@ class _MyMovieApp extends State<MyMovieApp> {
   }
 
   void _fetchNowPlayingMovies() async {
-    var response = await http.get(nowPlayingUrl);
+    var response = await http.get(Tmdb.nowPlayingUrl);
     var decodeJson = jsonDecode(response.body);
     setState(() {
       nowPlayingMovies = Movie.fromJson(decodeJson);
@@ -54,7 +45,7 @@ class _MyMovieApp extends State<MyMovieApp> {
   }
 
   void _fetchUpcomingMovies() async {
-    var response = await http.get(upcomingUrl);
+    var response = await http.get(Tmdb.upcomingUrl);
     var decodeJson = jsonDecode(response.body);
     setState(() {
       upcomingMovies = Movie.fromJson(decodeJson);
@@ -62,7 +53,7 @@ class _MyMovieApp extends State<MyMovieApp> {
   }
 
   void _fetchPopularMovies() async {
-    var response = await http.get(popularUrl);
+    var response = await http.get(Tmdb.popularUrl);
     var decodeJson = jsonDecode(response.body);
     setState(() {
       popularMovies = Movie.fromJson(decodeJson);
@@ -70,7 +61,7 @@ class _MyMovieApp extends State<MyMovieApp> {
   }
 
   void _fetchTopRatedMovies() async {
-    var response = await http.get(topRatedUrl);
+    var response = await http.get(Tmdb.topRatedUrl);
     var decodeJson = jsonDecode(response.body);
     setState(() {
       topRatedMovies = Movie.fromJson(decodeJson);
@@ -101,7 +92,7 @@ class _MyMovieApp extends State<MyMovieApp> {
             },
             child: Hero(
               tag: heroTag,
-              child: Image.network("${baseImageUrl}w342${movieItem.posterPath}",
+              child: Image.network("${Tmdb.baseImageUrl}w342${movieItem.posterPath}",
                   fit: BoxFit.cover),
             )));
   }
@@ -210,7 +201,7 @@ class _MyMovieApp extends State<MyMovieApp> {
                   children: <Widget>[
                     Container(
                       child: Image.network(
-                        "${baseImageUrl}w500/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
+                        "${Tmdb.baseImageUrl}w500/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
                         fit: BoxFit.cover,
                         width: 1000.0,
                         colorBlendMode: BlendMode.dstATop,
