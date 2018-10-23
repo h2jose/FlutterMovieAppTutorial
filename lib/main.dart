@@ -27,6 +27,10 @@ class _MyMovieApp extends State<MyMovieApp> {
   int heroTag = 0;
   int _currentIdex = 0;
 
+  //Paginación
+  int _pageNumber = 1;
+  int _totalItems = 0;
+
   @override
   void initState() {
     super.initState();
@@ -45,10 +49,14 @@ class _MyMovieApp extends State<MyMovieApp> {
   }
 
   void _fetchUpcomingMovies() async {
-    var response = await http.get(Tmdb.upcomingUrl);
+    var response = await http.get(
+        "${Tmdb.baseUrl}upcoming?api_key=${Tmdb.apiKey}&language=es&page=$_pageNumber");
     var decodeJson = jsonDecode(response.body);
+    upcomingMovies == null
+        ? upcomingMovies = Movie.fromJson(decodeJson)
+        : upcomingMovies.results.addAll(Movie.fromJson(decodeJson).results);
     setState(() {
-      upcomingMovies = Movie.fromJson(decodeJson);
+      _totalItems = upcomingMovies.results.length;
     });
   }
 
@@ -86,14 +94,20 @@ class _MyMovieApp extends State<MyMovieApp> {
         elevation: 15.0,
         child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => MovieDetail(movie: movieItem,)
-              ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MovieDetail(
+                            movie: movieItem,
+                          )));
             },
             child: Hero(
               tag: heroTag,
-              child: Image.network("${Tmdb.baseImageUrl}w342${movieItem.posterPath}",
-                  fit: BoxFit.cover),
+              child: movieItem.posterPath != null
+                  ? Image.network(
+                      "${Tmdb.baseImageUrl}w342${movieItem.posterPath}",
+                      fit: BoxFit.cover)
+                  : Image.asset("assets/emptyfilmposter.jpg"),
             )));
   }
 
@@ -144,16 +158,19 @@ class _MyMovieApp extends State<MyMovieApp> {
               ),
             ),
             Flexible(
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                children: movie == null
-                    ? <Widget>[Center(child: CircularProgressIndicator())]
-                    : movie.results
-                        .map((movieItem) => Padding(
-                              padding: EdgeInsets.only(left: 6.0, right: 2.0),
-                              child: _buildMovieListItem(movieItem),
-                            ))
-                        .toList(),
+                itemCount: _totalItems,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index >= movie.results.length - 1) {
+                    _pageNumber++;
+                    _fetchUpcomingMovies();
+                  }
+                  return Padding(
+                    padding: EdgeInsets.only(left: 6.0, right: 2.0),
+                    child: _buildMovieListItem(movie.results[index]),
+                  );
+                },
               ),
             ),
           ],
@@ -219,9 +236,9 @@ class _MyMovieApp extends State<MyMovieApp> {
           ];
         },
         body: ListView(children: <Widget>[
-          _buildMoviesListView(upcomingMovies, 'COMMING SOON'),
-          _buildMoviesListView(popularMovies, 'POPULAR'),
-          _buildMoviesListView(topRatedMovies, 'TOP RATES'),
+          _buildMoviesListView(upcomingMovies, 'COMMING SOON ($_pageNumber)'),
+          //_buildMoviesListView(popularMovies, 'POPULAR'),
+          //_buildMoviesListView(topRatedMovies, 'TOP RATES'),
         ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -236,7 +253,7 @@ class _MyMovieApp extends State<MyMovieApp> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.tag_faces), title: Text('Tickets')),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Account')),
+                icon: Icon(Icons.person), title: Text('Account')),
           ]),
     );
   }

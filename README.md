@@ -42,6 +42,11 @@ Archivos:
   + models/tmdb.dart
   + models/cast_crew.dart
 
+- **Tutorial 7 (Apendice)**: (Refactorizacionn Paginacion)
+
+Archivos:
+  + main.dart
+
 ----
 
 Este tutorial en youtube, por [Daniel Ortiz @daniorca ](https://github.com/daniorca):
